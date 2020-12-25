@@ -1,0 +1,79 @@
+<app-navbar></app-navbar>
+<div class="container">
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                        </div>
+                        <form [formGroup]="registerForm" (ngSubmit)="registerUser()" class="user">
+
+                            <div class="form-group">
+                            
+                                <input type="text" formControlName="firstname" placeholder="First name" class="form-control" id="firstname">
+                                <div *ngIf="firstname?.touched && firstname?.invalid" class="text-danger">
+                                    <small *ngIf="firstname?.errors?.required">Firstname is required <br></small> 
+                                    <small *ngIf="firstname?.errors?.pattern">Invalid Firstname <br></small> 
+                                    <small *ngIf="firstname?.errors?.minlength">Firstname must contains 2 chars at least </small> 
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                
+                                <input type="text" formControlName="lastname" placeholder="Last name" class="form-control" id="lastname">
+                                <div *ngIf="lastname?.touched && lastname?.invalid" class="text-danger">
+                                    <small *ngIf="lastname?.errors?.required">Firstname is required <br></small> 
+                                    <small *ngIf="lastname?.errors?.pattern">Invalid lastname <br></small> 
+                                    <small *ngIf="lastname?.errors?.minlength">Lastname must contains 2 chars at least </small> 
+                                </div>
+                            </div>
+                            <div class="form-group">
+                             
+                                <input type="email" formControlName="email" placeholder="Email address" class="form-control" id="mail">
+                                <div *ngIf="email?.touched && email?.invalid" class="text-danger">
+                                    <small *ngIf="email?.errors?.required">Email is required <br></small> 
+                                    <small *ngIf="email?.errors?.email">Invalid Email</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                               
+                                <input type="password" formControlName="password" placeholder="Password" class="form-control" id="password">
+                                <div *ngIf="password?.touched && password?.invalid" class="text-danger">
+                                    <small *ngIf="password?.errors?.required">Password is required <br></small> 
+                                    <small *ngIf="password?.errors?.minlength">Min 8 Caracters</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                               
+                                <input type="password" formControlName="password2" placeholder="Confirm password" class="form-control" id="password2">
+                                <div *ngIf="password2?.touched && (password2?.invalid || password2?.value != password?.value)" class="text-danger">
+                                    <small *ngIf="password2?.errors?.required">Password is required <br></small> 
+                                    <small *ngIf="password2?.errors?.minlength">Min 8 Caracters <br></small>
+                                    <small *ngIf="password2?.value != password?.value">Password does not match <br></small>
+                                </div>
+                            
+                            </div>
+                            <button type="submit" [disabled]="registerForm.invalid || password2?.value != password?.value" [ngClass]="{'btn-secondary':registerForm.invalid || password2?.value != password?.value,'btn-primary':registerForm.valid}" class="btn">Submit</button>
+                        </form>
+                        <hr>
+                        <div class="text-center">
+                            <a class="small" href="">Forgot Password?</a>
+                        </div>
+                        <div class="text-center">
+                            <a class="small" href="" routerLink="/login">Already have an account? Login!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<app-footer></app-footer>
+
+
