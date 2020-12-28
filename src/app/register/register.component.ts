@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms"
+import { HttpClient } from "@angular/common/http";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -7,9 +9,9 @@ import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms"
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-
+  public erreur:String=""
   public registerForm: FormGroup
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router) {
     let registerFormControls = {
       firstname: new FormControl("", [
         Validators.required,
@@ -34,10 +36,26 @@ export class RegisterComponent implements OnInit {
   get password2() { return this.registerForm.get('password2') }
 
   ngOnInit(): void {
+    let token = localStorage.getItem("mytoken")
+    if (token)
+    this.router.navigateByUrl('/dashboard'); 
   }
 
 
   registerUser() {
-    console.log(this.registerForm.value)
+
+    let data = this.registerForm.value
+    this.http.post<any>("https://itbs-backend.herokuapp.com/user/register",data)
+    .subscribe(
+      (result) => {
+       console.log(result)
+       this.router.navigateByUrl('/login'); // on peut utiliser aussi navigate pour passer des données
+      },
+      (error) => { console.log(error) 
+        this.erreur="Problem occured"
+      }
+    )
   }
+
+  
 }

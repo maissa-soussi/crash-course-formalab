@@ -2,6 +2,7 @@ import { componentFactoryName } from '@angular/compiler';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { AuthGuard } from './auth.guard';
 import { CartComponent } from './cart/cart.component';
 import { CategorieGComponent } from './categorie-g/categorie-g.component';
 import { CategoryAddComponent } from './category-add/category-add.component';
@@ -49,7 +50,8 @@ const routes: Routes = [
 
   {
     path: "dashboard",
-    component: DashboardComponent
+    component: DashboardComponent,
+    canActivate:[AuthGuard]
   },
 
   {
@@ -79,12 +81,14 @@ const routes: Routes = [
 
   {
     path:"categoriesG",
-    component: CategorieGComponent
+    component: CategorieGComponent,
+    canActivate:[AuthGuard]
   },
 
   {
     path:"productsG",
-    component: ProductGComponent
+    component: ProductGComponent,
+    canActivate:[AuthGuard]
   }
 
 ];

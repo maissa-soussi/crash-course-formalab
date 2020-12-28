@@ -19,5 +19,9 @@ export class CategorieGComponent implements OnInit {
   }
 
   
+detailcategory(id: String)
+{
+  console.log(id)
+}
 
 }

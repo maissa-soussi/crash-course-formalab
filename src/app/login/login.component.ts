@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormControl, FormBuilder, Validators} from "@angular/forms"
+import { HttpClient } from "@angular/common/http";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,8 +10,8 @@ import {FormGroup, FormControl, FormBuilder, Validators} from "@angular/forms"
 })
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup
-
-  constructor(private formBuilder: FormBuilder) { 
+  public erreur:String=""
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router) { 
     let loginFormControls = {
       email: new FormControl("",[
         Validators.required,
@@ -27,9 +29,24 @@ export class LoginComponent implements OnInit {
   get password() {return this.loginForm.get('password')}
 
   ngOnInit(): void {
+    let token = localStorage.getItem("mytoken")
+    if (token)
+    this.router.navigateByUrl('/dashboard'); 
   }
 
   loginUser() {
-    console.log(this.loginForm.value)
+    let data = this.loginForm.value
+    this.http.post<any>("https://itbs-backend.herokuapp.com/user/login",data)
+    .subscribe(
+      (result) => {
+       console.log(result)
+       let token = result.token
+       localStorage.setItem("mytoken",token)
+       this.router.navigateByUrl('/dashboard'); 
+      },
+      (err) => { console.log(err) 
+        this.erreur=err.error.message
+      }
+    )
   }
 }

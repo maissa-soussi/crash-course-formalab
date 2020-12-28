@@ -40,9 +40,11 @@
                                     <div *ngIf="categoriesList.length == 0" class="alert alert-warning">No categories found</div>
 
                                     <div class="list-group">
-                                        <a *ngFor="let categorie of categoriesList" href="#"
+                                        <a *ngFor="let categorie of categoriesList" (click)="detailcategory(categorie._id)"
                                             class="list-group-item">{{categorie.name}}</a>
+                                            <i class="fa fa-trash text-danger"></i>
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>

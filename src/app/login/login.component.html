@@ -16,6 +16,7 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                 </div>
+                                <div *ngIf="erreur.length>0"  class="text-danger">{{erreur}}</div>
                                 <form [formGroup]="loginForm" (ngSubmit)="loginUser()" class="user">
                                     <div class="form-group">
                                         <label for="email">Email address</label>
